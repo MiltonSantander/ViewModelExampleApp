@@ -15,11 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainActivityViewModelFactory(1)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
-        viewModel.count.observe(this) {
-            binding.textViewNumber.text = it.toString()
-        }
-        binding.buttonAdd.setOnClickListener {
-            viewModel.updateCountValue(binding.editTextNumber.text.toString().toInt())
-        }
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
     }
 }
