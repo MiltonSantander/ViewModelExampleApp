@@ -15,10 +15,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModelFactory = MainActivityViewModelFactory(1)
         viewModel = ViewModelProvider(this, viewModelFactory)[MainActivityViewModel::class.java]
-        binding.textViewNumber.text = viewModel.getCountValue().toString()
+        viewModel.count.observe(this) {
+            binding.textViewNumber.text = it.toString()
+        }
         binding.buttonAdd.setOnClickListener {
-            viewModel.updateCountValue(Integer.parseInt(binding.editTextNumber.text.toString()))
-            binding.textViewNumber.text = viewModel.getCountValue().toString()
+            viewModel.updateCountValue(binding.editTextNumber.text.toString().toInt())
         }
     }
 }
